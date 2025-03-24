@@ -59,7 +59,7 @@ export default function TypewriterEffectSmoothDemo() {
         </div>
 
         <p className="text-neutral-600 dark:text-neutral-200 text-sm sm:text-xl">
-          Hi, I'm{" "}
+          Hi, I&apos;m{" "}
           <span className="bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500  text-transparent bg-clip-text">
             Saurav
           </span>{" "}
