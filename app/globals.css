@@ -54,6 +54,10 @@
     --chart-5: 27 87% 67%;
 
     --radius: 0.5rem;
+
+    --sky-400: #38bdf8;
+
+    --sky-500: #0ea5e9;
   }
   .dark {
     --background: 240 10% 3.9%;
@@ -103,12 +107,27 @@
     --chart-4: 280 65% 60%;
 
     --chart-5: 340 75% 55%;
+
+    --sky-400: #38bdf8;
+
+    --sky-500: #0ea5e9;
   }
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+
+
+@layer base {
+  * {
+    @apply border-border;
   }
   body {
     @apply bg-background text-foreground;

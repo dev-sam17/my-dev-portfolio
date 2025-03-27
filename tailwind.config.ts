@@ -8,7 +8,6 @@ export default {
 		"./app/**/*.{js,ts,jsx,tsx,mdx}",
 	],
 	theme: {
-
 		extend: {
 			colors: {
 				background: 'hsl(var(--background))',
@@ -69,6 +68,10 @@ export default {
 			},
 			animation: {
 				wiggle: 'wiggle 1s ease-in-out infinite'
+			},
+			backgroundImage: {
+				'grid-pattern': '',
+				'grid-pattern-light': ''
 			}
 		}
 	},
