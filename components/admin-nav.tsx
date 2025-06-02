@@ -10,28 +10,28 @@ import { LayoutDashboard, FolderOpen, Briefcase } from "lucide-react"
 const navigation = [
   {
     name: "Dashboard",
-    href: "/dashboard",
+    href: "/admin",
     icon: LayoutDashboard,
   },
   {
     name: "Projects",
-    href: "/dashboard/projects",
+    href: "/admin/projects",
     icon: FolderOpen,
   },
   {
     name: "Freelance Projects",
-    href: "/dashboard/freelance-projects",
+    href: "/admin/freelance-projects",
     icon: Briefcase,
   },
 ]
 
-export function DashboardNav() {
+export function AdminNav() {
   const pathname = usePathname()
 
   return (
     <div className="flex h-16 items-center justify-between border-b bg-background px-6">
       <div className="flex items-center space-x-6">
-        <Link href="/dashboard" className="flex items-center space-x-2">
+        <Link href="/admin" className="flex items-center space-x-2">
           <div className="h-8 w-8 rounded-lg bg-slate-600 flex items-center justify-center">
             <span className="text-white font-bold text-sm">AP</span>
           </div>

@@ -1,14 +1,14 @@
 import type React from "react"
-import { DashboardNav } from "@/components/dashboard-nav"
+import { AdminNav } from "@/components/admin-nav"
 
-export default function DashboardLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
     <div className="min-h-screen bg-background">
-      <DashboardNav />
+      <AdminNav />
       <main className="container mx-auto py-6">{children}</main>
     </div>
   )

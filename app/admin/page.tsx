@@ -4,7 +4,7 @@ import { FolderOpen, Briefcase, Plus, BarChart3 } from "lucide-react"
 import Link from "next/link"
 import { mockProjects, mockFreelanceProjects } from "@/lib/mock-data"
 
-export default function DashboardPage() {
+export default function adminPage() {
   const totalProjects = mockProjects.length
   const totalFreelanceProjects = mockFreelanceProjects.length
 
@@ -64,13 +64,13 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent className="space-y-2">
             <Button asChild size="sm" className="w-full bg-slate-600 hover:bg-slate-700">
-              <Link href="/dashboard/projects/new">
+              <Link href="/admin/projects/new">
                 <Plus className="mr-2 h-4 w-4" />
                 New Project
               </Link>
             </Button>
             <Button asChild size="sm" variant="outline" className="w-full">
-              <Link href="/dashboard/freelance-projects/new">
+              <Link href="/admin/freelance-projects/new">
                 <Plus className="mr-2 h-4 w-4" />
                 New Freelance
               </Link>
@@ -96,12 +96,12 @@ export default function DashboardPage() {
                   <p className="text-sm text-muted-foreground">{project.technologies.slice(0, 2).join(", ")}</p>
                 </div>
                 <Button asChild size="sm" variant="outline">
-                  <Link href={`/dashboard/projects/${project.id}`}>View</Link>
+                  <Link href={`/admin/projects/${project.id}`}>View</Link>
                 </Button>
               </div>
             ))}
             <Button asChild variant="outline" className="w-full">
-              <Link href="/dashboard/projects">View All Projects</Link>
+              <Link href="/admin/projects">View All Projects</Link>
             </Button>
           </CardContent>
         </Card>
@@ -122,12 +122,12 @@ export default function DashboardPage() {
                   <p className="text-sm text-muted-foreground">{project.clientName}</p>
                 </div>
                 <Button asChild size="sm" variant="outline">
-                  <Link href={`/dashboard/freelance-projects/${project.id}`}>View</Link>
+                  <Link href={`/admin/freelance-projects/${project.id}`}>View</Link>
                 </Button>
               </div>
             ))}
             <Button asChild variant="outline" className="w-full">
-              <Link href="/dashboard/freelance-projects">View All Freelance</Link>
+              <Link href="/admin/freelance-projects">View All Freelance</Link>
             </Button>
           </CardContent>
         </Card>
