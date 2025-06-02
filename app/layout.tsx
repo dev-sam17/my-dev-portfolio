@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { FloatingNavDemo } from "./ui/nav/navBar";
+import { Footer } from "@/components/ui/footer";
 
 export const metadata: Metadata = {
   title: "Saurav Kumar",
@@ -26,6 +27,7 @@ export default function RootLayout({
           >
             <FloatingNavDemo />
             {children}
+            <Footer />
           </ThemeProvider>
         </body>
       </html>
