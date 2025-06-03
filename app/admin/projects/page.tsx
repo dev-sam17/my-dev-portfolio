@@ -1,17 +1,30 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Plus, Search } from "lucide-react"
 import Link from "next/link"
 import { ProjectCard } from "./project-card"
-import { mockProjects } from "@/lib/mock-data"
 import type { Project } from "@/lib/types"
+import { getProjects, deleteProject } from "@/lib/actions/projects"
 
 export default function ProjectsPage() {
-  const [projects, setProjects] = useState<Project[]>(mockProjects)
+  const [projects, setProjects] = useState<Project[]>([])
   const [searchTerm, setSearchTerm] = useState("")
+
+  const fetchProjects = async () => {
+    const response = await getProjects()
+    if("error" in response){
+      console.error(response.error)
+      return
+    }
+    setProjects(response)
+  }
+
+  useEffect(() => {  
+    fetchProjects()
+  }, [])
 
   const filteredProjects = projects.filter(
     (project) =>
@@ -20,8 +33,16 @@ export default function ProjectsPage() {
       project.technologies.some((tech) => tech.toLowerCase().includes(searchTerm.toLowerCase())),
   )
 
-  const handleDelete = (id: number) => {
-    setProjects(projects.filter((project) => project.id !== id))
+  const handleDelete = (id: string) => {
+    const deleteProjectById = async () => {
+      const response = await deleteProject(id)
+      if("error" in response){  
+        console.error(response.error)
+        return
+      }
+      setProjects((prev) => prev.filter((project) => project.id !== id))
+    }
+    deleteProjectById()
   }
 
   return (
