@@ -24,7 +24,7 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
     <div className="space-y-6">
       <div className="flex items-center space-x-4">
         <Button asChild variant="outline" size="icon">
-          <Link href="/dashboard/projects">
+          <Link href="/admin/projects">
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
@@ -33,7 +33,7 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
           <p className="text-muted-foreground">Project Details</p>
         </div>
         <Button asChild className="bg-slate-600 hover:bg-slate-700">
-          <Link href={`/dashboard/projects/edit/${project.id}`}>
+          <Link href={`/admin/projects/edit/${project.id}`}>
             <Edit className="mr-2 h-4 w-4" />
             Edit Project
           </Link>

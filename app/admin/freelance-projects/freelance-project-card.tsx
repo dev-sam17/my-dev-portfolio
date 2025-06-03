@@ -51,10 +51,10 @@ export function FreelanceProjectCard({ project, onDelete }: FreelanceProjectCard
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem asChild>
-                <Link href={`/dashboard/freelance-projects/${project.id}`}>View Details</Link>
+                <Link href={`/admin/freelance-projects/${project.id}`}>View Details</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href={`/dashboard/freelance-projects/edit/${project.id}`}>
+                <Link href={`/admin/freelance-projects/edit/${project.id}`}>
                   <Edit className="mr-2 h-4 w-4" />
                   Edit
                 </Link>

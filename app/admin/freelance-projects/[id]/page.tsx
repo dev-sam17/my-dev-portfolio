@@ -23,7 +23,7 @@ export default function FreelanceProjectDetailPage({ params }: FreelanceProjectD
     <div className="space-y-6">
       <div className="flex items-center space-x-4">
         <Button asChild variant="outline" size="icon">
-          <Link href="/dashboard/freelance-projects">
+          <Link href="/admin/freelance-projects">
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
@@ -35,7 +35,7 @@ export default function FreelanceProjectDetailPage({ params }: FreelanceProjectD
           </p>
         </div>
         <Button asChild className="bg-slate-600 hover:bg-slate-700">
-          <Link href={`/dashboard/freelance-projects/edit/${project.id}`}>
+          <Link href={`/admin/freelance-projects/edit/${project.id}`}>
             <Edit className="mr-2 h-4 w-4" />
             Edit Project
           </Link>

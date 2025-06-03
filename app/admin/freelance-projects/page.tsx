@@ -33,7 +33,7 @@ export default function FreelanceProjectsPage() {
           <p className="text-muted-foreground">Manage your client projects</p>
         </div>
         <Button asChild className="bg-slate-600 hover:bg-slate-700">
-          <Link href="/dashboard/freelance-projects/new">
+          <Link href="/admin/freelance-projects/new">
             <Plus className="mr-2 h-4 w-4" />
             Add Freelance Project
           </Link>
@@ -56,7 +56,7 @@ export default function FreelanceProjectsPage() {
         <div className="text-center py-12">
           <p className="text-muted-foreground">No freelance projects found.</p>
           <Button asChild className="mt-4 bg-slate-600 hover:bg-slate-700">
-            <Link href="/dashboard/freelance-projects/new">
+            <Link href="/admin/freelance-projects/new">
               <Plus className="mr-2 h-4 w-4" />
               Create your first freelance project
             </Link>

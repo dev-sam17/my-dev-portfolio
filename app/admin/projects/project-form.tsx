@@ -35,7 +35,7 @@ export function ProjectForm({ project }: ProjectFormProps) {
     e.preventDefault()
     // In a real app, this would make an API call
     console.log("Saving project:", formData)
-    router.push("/dashboard/projects")
+    router.push("/admin/projects")
   }
 
   const addTechnology = () => {
@@ -76,7 +76,7 @@ export function ProjectForm({ project }: ProjectFormProps) {
     <div className="space-y-6">
       <div className="flex items-center space-x-4">
         <Button asChild variant="outline" size="icon">
-          <Link href="/dashboard/projects">
+          <Link href="/admin/projects">
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
@@ -196,7 +196,7 @@ export function ProjectForm({ project }: ProjectFormProps) {
                 {project ? "Update Project" : "Create Project"}
               </Button>
               <Button asChild variant="outline">
-                <Link href="/dashboard/projects">Cancel</Link>
+                <Link href="/admin/projects">Cancel</Link>
               </Button>
             </div>
           </form>

@@ -32,7 +32,7 @@ export default function ProjectsPage() {
           <p className="text-muted-foreground">Manage your development projects</p>
         </div>
         <Button asChild className="bg-slate-600 hover:bg-slate-700">
-          <Link href="/dashboard/projects/new">
+          <Link href="/admin/projects/new">
             <Plus className="mr-2 h-4 w-4" />
             Add Project
           </Link>
@@ -55,7 +55,7 @@ export default function ProjectsPage() {
         <div className="text-center py-12">
           <p className="text-muted-foreground">No projects found.</p>
           <Button asChild className="mt-4 bg-slate-600 hover:bg-slate-700">
-            <Link href="/dashboard/projects/new">
+            <Link href="/admin/projects/new">
               <Plus className="mr-2 h-4 w-4" />
               Create your first project
             </Link>

@@ -57,10 +57,10 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem asChild>
-                <Link href={`/dashboard/projects/${project.id}`}>View Details</Link>
+                <Link href={`/admin/projects/${project.id}`}>View Details</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href={`/dashboard/projects/edit/${project.id}`}>
+                <Link href={`/admin/projects/edit/${project.id}`}>
                   <Edit className="mr-2 h-4 w-4" />
                   Edit
                 </Link>

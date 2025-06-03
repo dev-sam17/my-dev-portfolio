@@ -35,7 +35,7 @@ export function FreelanceProjectForm({ project }: FreelanceProjectFormProps) {
     e.preventDefault()
     // In a real app, this would make an API call
     console.log("Saving freelance project:", formData)
-    router.push("/dashboard/freelance-projects")
+    router.push("/admin/freelance-projects")
   }
 
   const addTechnology = () => {
@@ -56,10 +56,10 @@ export function FreelanceProjectForm({ project }: FreelanceProjectFormProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mx-5">
       <div className="flex items-center space-x-4">
         <Button asChild variant="outline" size="icon">
-          <Link href="/dashboard/freelance-projects">
+          <Link href="/admin/freelance-projects">
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
@@ -179,7 +179,7 @@ export function FreelanceProjectForm({ project }: FreelanceProjectFormProps) {
                 {project ? "Update Freelance Project" : "Create Freelance Project"}
               </Button>
               <Button asChild variant="outline">
-                <Link href="/dashboard/freelance-projects">Cancel</Link>
+                <Link href="/admin/freelance-projects">Cancel</Link>
               </Button>
             </div>
           </form>
