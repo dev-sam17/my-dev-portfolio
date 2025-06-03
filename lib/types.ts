@@ -1,20 +1,9 @@
-export interface Project {
-  id: number
-  name: string
-  description: string
-  technologies: string[]
-  images: string[]
-  demoUrl?: string
-  githubUrl?: string
-}
+import { Prisma } from "./prisma";
 
-export interface FreelanceProject {
-  id: number
-  clientName: string
-  projectName: string
-  description: string
-  technologies: string[]
-  timeline: string
-  projectUrl?: string
-  githubUrl?: string
-}
+export type Project = Prisma.Project;
+export type ProjectForm = Omit<Project, "id">;
+
+
+export type FreelanceProject = Prisma.FreelanceProject;
+export type FreelanceProjectForm = Omit<FreelanceProject, "id">;
+
