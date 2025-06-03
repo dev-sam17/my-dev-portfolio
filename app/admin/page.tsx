@@ -2,11 +2,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { FolderOpen, Briefcase, Plus, BarChart3 } from "lucide-react"
 import Link from "next/link"
-import { mockProjects, mockFreelanceProjects } from "@/lib/mock-data"
+import { getProjects } from "@/lib/actions/projects"
+import { getFreelanceProjects } from "@/lib/actions/freelance"
 
-export default function adminPage() {
-  const totalProjects = mockProjects.length
-  const totalFreelanceProjects = mockFreelanceProjects.length
+export default async function adminPage() {
+
+  const projects = await getProjects();
+  const freelanceProjects = await getFreelanceProjects();
+
+  if("error" in projects || "error" in freelanceProjects){
+    console.error((projects as { error: string }).error || (freelanceProjects as { error: string }).error)
+    return
+  }
 
   return (
     <div className="space-y-6 mx-5">
@@ -26,7 +33,7 @@ export default function adminPage() {
             <FolderOpen className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{totalProjects}</div>
+            <div className="text-2xl font-bold">{projects.length}</div>
             <p className="text-xs text-muted-foreground">Active development projects</p>
           </CardContent>
         </Card>
@@ -36,7 +43,7 @@ export default function adminPage() {
             <Briefcase className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{totalFreelanceProjects}</div>
+            <div className="text-2xl font-bold">{freelanceProjects.length}</div>
             <p className="text-xs text-muted-foreground">Client projects completed</p>
           </CardContent>
         </Card>
@@ -49,8 +56,8 @@ export default function adminPage() {
             <div className="text-2xl font-bold">
               {
                 new Set([
-                  ...mockProjects.flatMap((p) => p.technologies),
-                  ...mockFreelanceProjects.flatMap((p) => p.technologies),
+                  ...projects.flatMap((p) => p.technologies),
+                  ...freelanceProjects.flatMap((p) => p.technologies),
                 ]).size
               }
             </div>
@@ -86,7 +93,7 @@ export default function adminPage() {
             <CardDescription>Your latest development projects</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {mockProjects.slice(0, 3).map((project) => (
+            {projects.slice(0, 3).map((project) => (
               <div key={project.id} className="flex items-center space-x-4">
                 <div className="h-10 w-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
                   <FolderOpen className="h-5 w-5 text-slate-600 dark:text-slate-400" />
@@ -112,7 +119,7 @@ export default function adminPage() {
             <CardDescription>Your latest client projects</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {mockFreelanceProjects.slice(0, 3).map((project) => (
+            {freelanceProjects.slice(0, 3).map((project) => (
               <div key={project.id} className="flex items-center space-x-4">
                 <div className="h-10 w-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
                   <Briefcase className="h-5 w-5 text-slate-600 dark:text-slate-400" />
