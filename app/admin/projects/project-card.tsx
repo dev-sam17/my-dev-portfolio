@@ -22,7 +22,7 @@ import type { Project } from "@/lib/types"
 
 interface ProjectCardProps {
   project: Project
-  onDelete: (id: number) => void
+  onDelete: (id: string) => void
 }
 
 export function ProjectCard({ project, onDelete }: ProjectCardProps) {
