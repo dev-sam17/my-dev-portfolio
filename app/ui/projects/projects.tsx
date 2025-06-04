@@ -87,7 +87,7 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
   };
 
   return (
-    <div className="container h-full w-full bg-neutral-100 dark:bg-slate-950 py-16">
+    <div className="container h-full w-full bg-gradient-to-b from-white to-neutral-100 dark:from-gray-900 dark:to-black py-16">
       <div className="space-y-8">
         <div className="text-4xl font-bold dark:text-white text-black text-center">
           <h2>Featured Projects</h2>

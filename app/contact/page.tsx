@@ -7,6 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { ToggleButton } from "../ui/nav/toggleButton";
 import { ColourfulText } from "@/components/ui/colourful-text";
+import { FloatingNavDemo } from "../ui/nav/navBar";
+import { Footer } from "@/components/ui/footer";
 
 export default function ContactPage() {
   // Replace with your actual WhatsApp number
@@ -19,8 +21,9 @@ export default function ContactPage() {
 
   return (
     <>
+      <FloatingNavDemo />
       <ToggleButton />
-      <div className="container mx-auto px-4 py-12 md:py-16 lg:py-24 bg-gradient-to-b from-white to-neutral-100 dark:from-slate-900 dark:to-slate-950">
+      <div className="container mx-auto px-4 py-12 md:py-16 lg:py-24 bg-gradient-to-b from-white to-neutral-100 dark:from-gray-950 dark:to-gray-900">
         <div className="mx-auto max-w-5xl">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4">
@@ -34,7 +37,7 @@ export default function ContactPage() {
 
           <div className="grid gap-8 md:grid-cols-2">
             <div className="space-y-8 ">
-              <Card className="dark:bg-slate-950">
+              <Card className="dark:bg-gray-800">
                 <CardContent className="p-6 ">
                   <div className="space-y-6 ">
                     <div className="flex items-center gap-3">
@@ -134,7 +137,7 @@ export default function ContactPage() {
             </div>
 
             <div className="space-y-6">
-              <div className="rounded-lg border bg-card p-6 shadow-sm dark:bg-slate-950">
+              <div className="rounded-lg border bg-card p-6 shadow-sm dark:bg-gray-800">
                 <h2 className="text-xl font-semibold mb-4">
                   Send me a message
                 </h2>
@@ -145,6 +148,7 @@ export default function ContactPage() {
                       <Input
                         id="first-name"
                         placeholder="Enter your first name"
+                        className="border-gray-500"
                       />
                     </div>
                     <div className="space-y-2">
@@ -152,6 +156,7 @@ export default function ContactPage() {
                       <Input
                         id="last-name"
                         placeholder="Enter your last name"
+                        className="border-gray-500"
                       />
                     </div>
                   </div>
@@ -161,6 +166,7 @@ export default function ContactPage() {
                       id="email"
                       type="email"
                       placeholder="Enter your email"
+                      className="border-gray-500"
                     />
                   </div>
                   <div className="space-y-2">
@@ -169,6 +175,7 @@ export default function ContactPage() {
                       id="phone"
                       type="tel"
                       placeholder="Enter your phone number"
+                      className="border-gray-500"
                     />
                   </div>
                   <div className="space-y-2">
@@ -176,7 +183,7 @@ export default function ContactPage() {
                     <Textarea
                       id="message"
                       placeholder="How can we help you?"
-                      className="min-h-[120px]"
+                      className="min-h-[120px] border-gray-500"
                     />
                   </div>
                   <Button type="submit" className="w-full">
@@ -188,6 +195,7 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
