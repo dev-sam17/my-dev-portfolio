@@ -1,4 +1,4 @@
-import TypewriterEffectSmoothDemo from "./ui/hero-section/typewriter";
+import HeroSection from "./ui/hero-section/hero-section";
 import { TeckStack } from "./ui/tech-stack/tech-stack";
 import { ToggleButton } from "./ui/nav/toggleButton";
 import { FloatingNavDemo } from "./ui/nav/navBar";
@@ -15,7 +15,7 @@ export default async function Home() {
       <ToggleButton />
       <FloatingNavDemo />
       <section id="hero">
-        <TypewriterEffectSmoothDemo />
+        <HeroSection />
       </section>
       <section id="teck-stack">
         <TeckStack />

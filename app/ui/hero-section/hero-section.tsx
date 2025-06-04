@@ -11,9 +11,8 @@ import Link from "next/link";
 const resumeLink =
   "https://drive.google.com/file/d/1Yf4beTSTQhPNkFTlpnZn80aI7W-HMcXV/view?usp=sharing";
 
-export default function TypewriterEffectSmoothDemo() {
+export default function HeroSection() {
   const router = useRouter();
-  // Define multiple sentences to display sequentially
   const sentences = [
     [
       { text: "Full" },
