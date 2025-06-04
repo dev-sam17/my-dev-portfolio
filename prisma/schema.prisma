@@ -9,22 +9,26 @@ datasource db {
 }
 
 model Project {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
-  description   String
-  technologies  String[]
-  images        String[]
-  demoUrl       String?
-  githubUrl     String?
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  description  String
+  technologies String[]
+  images       String[]
+  demoUrl      String?
+  githubUrl    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model FreelanceProject {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  clientName    String
-  projectName   String
-  description   String
-  technologies  String[]
-  timeline      String
-  projectUrl    String?
-  githubUrl     String?
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  clientName   String
+  projectName  String
+  description  String
+  technologies String[]
+  timeline     String
+  projectUrl   String?
+  githubUrl    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
