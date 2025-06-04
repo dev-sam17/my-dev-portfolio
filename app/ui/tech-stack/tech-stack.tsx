@@ -1,6 +1,6 @@
 import { Feature197Demo } from "./accordion-stack";
 
-export function TeckStack() {
+export function TechStack() {
   return (
     <div className="container h-svh w-svh  bg-neutral-100  dark:bg-slate-950">
       <div className="p-5">

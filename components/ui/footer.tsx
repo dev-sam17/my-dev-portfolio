@@ -90,7 +90,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/#teck-stack"
+                  href="/#tech-stack"
                   className="text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors"
                 >
                   Skills

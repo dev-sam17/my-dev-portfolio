@@ -1,5 +1,5 @@
 import HeroSection from "./ui/hero-section/hero-section";
-import { TeckStack } from "./ui/tech-stack/tech-stack";
+import { TechStack } from "./ui/tech-stack/tech-stack";
 import { ToggleButton } from "./ui/nav/toggleButton";
 import { FloatingNavDemo } from "./ui/nav/navBar";
 import { Footer } from "@/components/ui/footer";
@@ -17,8 +17,8 @@ export default async function Home() {
       <section id="hero">
         <HeroSection />
       </section>
-      <section id="teck-stack">
-        <TeckStack />
+      <section id="tech-stack">
+        <TechStack />
       </section>
       <section id="projects">
         <ProjectsSection projects={projects as Project[]} />

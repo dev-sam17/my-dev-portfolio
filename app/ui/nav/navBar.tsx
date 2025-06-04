@@ -17,7 +17,7 @@ export function FloatingNavDemo() {
     },
     {
       name: "Skillset",
-      link: "/#teck-stack",
+      link: "/#tech-stack",
       icon: <IconCode className="h-4 w-4 text-neutral-500 dark:text-white" />,
     },
     {
