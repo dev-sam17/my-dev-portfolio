@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import portfolioDp from "@/public/portfolio-dp.png";
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import Link from "next/link";
 
 const resumeLink =
   "https://drive.google.com/file/d/1Yf4beTSTQhPNkFTlpnZn80aI7W-HMcXV/view?usp=sharing";
@@ -72,14 +74,18 @@ export default function TypewriterEffectSmoothDemo() {
         </p>
         <TypewriterEffectSmooth sentences={sentences} />
         <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-10">
-          <button className="w-40 h-10 rounded-xl bg-black border hover:scale-125 transition duration-300 dark:border-white border-transparent text-white text-sm bg-gradient-to-r b from-red-600 to-indigo-600">
-            <a href={resumeLink} target="_blank">
-              Resume
-            </a>
-          </button>
+          <HoverBorderGradient
+            containerClassName="w-40 rounded-full text-sm hover:scale-110 transition duration-300"
+            as="button"
+            className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
+          >
+            <Link href={resumeLink} target="_blank">
+              <span className="bg-transparent">Resume</span>
+            </Link>
+          </HoverBorderGradient>
           <button
             onClick={() => router.push("/contact")}
-            className="w-40 h-10 rounded-xl bg-white text-black border border-black text-sm hover:scale-125 transition duration-300"
+            className="w-40 h-10 rounded-full bg-white text-black border border-black text-sm hover:scale-110 transition duration-300"
           >
             Contact
           </button>
