@@ -1,18 +1,18 @@
-import { notFound } from "next/navigation"
-import { ProjectForm } from "../../project-form"
-import { mockProjects } from "@/lib/mock-data"
+import { notFound } from "next/navigation";
+import { ProjectForm } from "../../project-form";
+import { getProjectById } from "@/lib/actions/projects";
 
 interface EditProjectPageProps {
-  params: {
-    id: string
-  }
+  params: Promise<{ id: string }>;
 }
 
-export default function EditProjectPage({ params }: EditProjectPageProps) {
-  const project = mockProjects.find((p) => p.id === Number.parseInt(params.id))
+export default async function EditProjectPage({
+  params,
+}: EditProjectPageProps) {
+  const project = await getProjectById((await params).id);
 
-  if (!project) {
-    notFound()
+  if (!project || "error" in project) {
+    notFound();
   }
 
   return (
@@ -23,5 +23,5 @@ export default function EditProjectPage({ params }: EditProjectPageProps) {
       </div>
       <ProjectForm project={project} />
     </div>
-  )
+  );
 }

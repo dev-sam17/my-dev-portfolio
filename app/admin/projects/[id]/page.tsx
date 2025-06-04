@@ -1,23 +1,23 @@
-import { notFound } from "next/navigation"
-import Image from "next/image"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ArrowLeft, Edit, ExternalLink, Github } from "lucide-react"
-import { mockProjects } from "@/lib/mock-data"
+import { notFound } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, Edit, ExternalLink, Github } from "lucide-react";
+import { getProjectById } from "@/lib/actions/projects";
 
 interface ProjectDetailPageProps {
-  params: {
-    id: string
-  }
+  params: Promise<{ id: string }>;
 }
 
-export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
-  const project = mockProjects.find((p) => p.id === Number.parseInt(params.id))
+export default async function ProjectDetailPage({
+  params,
+}: ProjectDetailPageProps) {
+  const project = await getProjectById((await params).id);
 
-  if (!project) {
-    notFound()
+  if (!project || "error" in project) {
+    notFound();
   }
 
   return (
@@ -49,7 +49,10 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
             <CardContent>
               <div className="grid gap-4 md:grid-cols-2">
                 {project.images.map((image, index) => (
-                  <div key={index} className="aspect-video relative rounded-lg overflow-hidden">
+                  <div
+                    key={index}
+                    className="aspect-video relative rounded-lg overflow-hidden"
+                  >
                     <Image
                       src={image || "/placeholder.svg"}
                       alt={`${project.name} screenshot ${index + 1}`}
@@ -67,7 +70,9 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
               <CardTitle>Description</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground leading-relaxed">{project.description}</p>
+              <p className="text-muted-foreground leading-relaxed">
+                {project.description}
+              </p>
             </CardContent>
           </Card>
         </div>
@@ -95,7 +100,11 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
             <CardContent className="space-y-3">
               {project.demoUrl && (
                 <Button asChild className="w-full" variant="outline">
-                  <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <ExternalLink className="mr-2 h-4 w-4" />
                     View Demo
                   </a>
@@ -103,7 +112,11 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
               )}
               {project.githubUrl && (
                 <Button asChild className="w-full" variant="outline">
-                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <Github className="mr-2 h-4 w-4" />
                     View Source Code
                   </a>
@@ -118,21 +131,29 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">Project ID</span>
+                <span className="text-sm text-muted-foreground">
+                  Project ID
+                </span>
                 <span className="text-sm font-medium">{project.id}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">Technologies</span>
-                <span className="text-sm font-medium">{project.technologies.length}</span>
+                <span className="text-sm text-muted-foreground">
+                  Technologies
+                </span>
+                <span className="text-sm font-medium">
+                  {project.technologies.length}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-muted-foreground">Images</span>
-                <span className="text-sm font-medium">{project.images.length}</span>
+                <span className="text-sm font-medium">
+                  {project.images.length}
+                </span>
               </div>
             </CardContent>
           </Card>
         </div>
       </div>
     </div>
-  )
+  );
 }

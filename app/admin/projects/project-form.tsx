@@ -85,6 +85,7 @@ export function ProjectForm({ project }: ProjectFormProps) {
       });
       setValue("images", [...images, newBlob.url]);
     } catch (error) {
+      console.log(error);
       toast({
         title: "Error",
         description: "Failed to upload image",

@@ -15,6 +15,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         // Generate a client token for the browser to upload the file
         // ⚠️ Authenticate and authorize users before generating the token.
         // Otherwise, you're allowing anonymous uploads.
+        console.log(pathname);
  
         return {
           allowedContentTypes: ['image/jpeg', 'image/png', 'image/webp'],
@@ -37,6 +38,7 @@ export async function POST(request: Request): Promise<NextResponse> {
           // const { userId } = JSON.parse(tokenPayload);
           // await db.update({ avatar: blob.url, userId });
         } catch (error) {
+          console.log(error);
           throw new Error('Could not update user');
         }
       },

@@ -1,35 +1,38 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Plus, Search } from "lucide-react"
-import Link from "next/link"
-import { FreelanceProjectCard } from "./freelance-project-card"
-import { mockFreelanceProjects } from "@/lib/mock-data"
-import type { FreelanceProject } from "@/lib/types"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Plus, Search } from "lucide-react";
+import Link from "next/link";
+import { FreelanceProjectCard } from "./freelance-project-card";
+import type { FreelanceProject } from "@/lib/types";
 
 export default function FreelanceProjectsPage() {
-  const [projects, setProjects] = useState<FreelanceProject[]>(mockFreelanceProjects)
-  const [searchTerm, setSearchTerm] = useState("")
+  const [projects, setProjects] = useState<FreelanceProject[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const filteredProjects = projects.filter(
     (project) =>
       project.projectName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       project.clientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      project.technologies.some((tech) => tech.toLowerCase().includes(searchTerm.toLowerCase())),
-  )
+      project.technologies.some((tech) =>
+        tech.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+  );
 
-  const handleDelete = (id: number) => {
-    setProjects(projects.filter((project) => project.id !== id))
-  }
+  const handleDelete = (id: string) => {
+    setProjects(projects.filter((project) => project.id !== id));
+  };
 
   return (
     <div className="space-y-6 mx-5">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Freelance Projects</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Freelance Projects
+          </h1>
           <p className="text-muted-foreground">Manage your client projects</p>
         </div>
         <Button asChild className="bg-slate-600 hover:bg-slate-700">
@@ -65,10 +68,14 @@ export default function FreelanceProjectsPage() {
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredProjects.map((project) => (
-            <FreelanceProjectCard key={project.id} project={project} onDelete={handleDelete} />
+            <FreelanceProjectCard
+              key={project.id}
+              project={project}
+              onDelete={handleDelete}
+            />
           ))}
         </div>
       )}
     </div>
-  )
+  );
 }

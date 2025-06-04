@@ -1,11 +1,17 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,23 +21,34 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal, Edit, Trash2, ExternalLink, Github } from "lucide-react"
-import type { Project } from "@/lib/types"
+} from "@/components/ui/alert-dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  MoreHorizontal,
+  Edit,
+  Trash2,
+  ExternalLink,
+  Github,
+} from "lucide-react";
+import type { Project } from "@/lib/types";
 
 interface ProjectCardProps {
-  project: Project
-  onDelete: (id: string) => void
+  project: Project;
+  onDelete: (id: string) => void;
 }
 
 export function ProjectCard({ project, onDelete }: ProjectCardProps) {
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const handleDelete = () => {
-    onDelete(project.id)
-    setShowDeleteDialog(false)
-  }
+    onDelete(project.id);
+    setShowDeleteDialog(false);
+  };
 
   return (
     <Card className="overflow-hidden">
@@ -47,7 +64,9 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
         <div className="flex items-start justify-between">
           <div className="space-y-1">
             <CardTitle className="line-clamp-1">{project.name}</CardTitle>
-            <CardDescription className="line-clamp-2">{project.description}</CardDescription>
+            <CardDescription className="line-clamp-2">
+              {project.description}
+            </CardDescription>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -65,7 +84,10 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
                   Edit
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setShowDeleteDialog(true)} className="text-destructive">
+              <DropdownMenuItem
+                onClick={() => setShowDeleteDialog(true)}
+                className="text-destructive"
+              >
                 <Trash2 className="mr-2 h-4 w-4" />
                 Delete
               </DropdownMenuItem>
@@ -89,7 +111,11 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
         <div className="flex space-x-2">
           {project.demoUrl && (
             <Button asChild size="sm" variant="outline" className="flex-1">
-              <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+              <a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <ExternalLink className="mr-2 h-4 w-4" />
                 Demo
               </a>
@@ -97,7 +123,11 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
           )}
           {project.githubUrl && (
             <Button asChild size="sm" variant="outline" className="flex-1">
-              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Github className="mr-2 h-4 w-4" />
                 Code
               </a>
@@ -111,8 +141,8 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the project "{project.name}" and remove all
-              associated data.
+              This action cannot be undone. This will permanently delete the
+              project &quot;{project.name}&quot; and remove all associated data.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -127,5 +157,5 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
         </AlertDialogContent>
       </AlertDialog>
     </Card>
-  )
+  );
 }

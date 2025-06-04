@@ -1,22 +1,29 @@
-import { notFound } from "next/navigation"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ArrowLeft, Edit, ExternalLink, Github, User, Clock } from "lucide-react"
-import { mockFreelanceProjects } from "@/lib/mock-data"
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  ArrowLeft,
+  Edit,
+  ExternalLink,
+  Github,
+  User,
+  Clock,
+} from "lucide-react";
+import { getFreelanceProjectById } from "@/lib/actions/freelance";
 
 interface FreelanceProjectDetailPageProps {
-  params: {
-    id: string
-  }
+  params: Promise<{ id: string }>;
 }
 
-export default function FreelanceProjectDetailPage({ params }: FreelanceProjectDetailPageProps) {
-  const project = mockFreelanceProjects.find((p) => p.id === Number.parseInt(params.id))
+export default async function FreelanceProjectDetailPage({
+  params,
+}: FreelanceProjectDetailPageProps) {
+  const project = await getFreelanceProjectById((await params).id);
 
-  if (!project) {
-    notFound()
+  if (!project || "error" in project) {
+    notFound();
   }
 
   return (
@@ -28,7 +35,9 @@ export default function FreelanceProjectDetailPage({ params }: FreelanceProjectD
           </Link>
         </Button>
         <div className="flex-1">
-          <h1 className="text-3xl font-bold tracking-tight">{project.projectName}</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            {project.projectName}
+          </h1>
           <p className="text-muted-foreground flex items-center gap-1">
             <User className="h-4 w-4" />
             {project.clientName}
@@ -49,7 +58,9 @@ export default function FreelanceProjectDetailPage({ params }: FreelanceProjectD
               <CardTitle>Project Description</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground leading-relaxed">{project.description}</p>
+              <p className="text-muted-foreground leading-relaxed">
+                {project.description}
+              </p>
             </CardContent>
           </Card>
 
@@ -79,14 +90,18 @@ export default function FreelanceProjectDetailPage({ params }: FreelanceProjectD
                 <User className="h-4 w-4 text-muted-foreground" />
                 <div>
                   <p className="text-sm font-medium">Client</p>
-                  <p className="text-sm text-muted-foreground">{project.clientName}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {project.clientName}
+                  </p>
                 </div>
               </div>
               <div className="flex items-center space-x-2">
                 <Clock className="h-4 w-4 text-muted-foreground" />
                 <div>
                   <p className="text-sm font-medium">Timeline</p>
-                  <p className="text-sm text-muted-foreground">{project.timeline}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {project.timeline}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -99,7 +114,11 @@ export default function FreelanceProjectDetailPage({ params }: FreelanceProjectD
             <CardContent className="space-y-3">
               {project.projectUrl && (
                 <Button asChild className="w-full" variant="outline">
-                  <a href={project.projectUrl} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={project.projectUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <ExternalLink className="mr-2 h-4 w-4" />
                     View Live Project
                   </a>
@@ -107,7 +126,11 @@ export default function FreelanceProjectDetailPage({ params }: FreelanceProjectD
               )}
               {project.githubUrl && (
                 <Button asChild className="w-full" variant="outline">
-                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <Github className="mr-2 h-4 w-4" />
                     View Source Code
                   </a>
@@ -122,12 +145,18 @@ export default function FreelanceProjectDetailPage({ params }: FreelanceProjectD
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">Project ID</span>
+                <span className="text-sm text-muted-foreground">
+                  Project ID
+                </span>
                 <span className="text-sm font-medium">{project.id}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">Technologies</span>
-                <span className="text-sm font-medium">{project.technologies.length}</span>
+                <span className="text-sm text-muted-foreground">
+                  Technologies
+                </span>
+                <span className="text-sm font-medium">
+                  {project.technologies.length}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-muted-foreground">Duration</span>
@@ -138,5 +167,5 @@ export default function FreelanceProjectDetailPage({ params }: FreelanceProjectD
         </div>
       </div>
     </div>
-  )
+  );
 }

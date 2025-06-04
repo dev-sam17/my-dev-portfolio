@@ -1,10 +1,16 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { useState } from "react";
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,30 +20,48 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal, Edit, Trash2, ExternalLink, Github, Clock, User } from "lucide-react"
-import type { FreelanceProject } from "@/lib/types"
+} from "@/components/ui/alert-dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  MoreHorizontal,
+  Edit,
+  Trash2,
+  ExternalLink,
+  Github,
+  Clock,
+  User,
+} from "lucide-react";
+import type { FreelanceProject } from "@/lib/types";
 
 interface FreelanceProjectCardProps {
-  project: FreelanceProject
-  onDelete: (id: number) => void
+  project: FreelanceProject;
+  onDelete: (id: string) => void;
 }
 
-export function FreelanceProjectCard({ project, onDelete }: FreelanceProjectCardProps) {
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+export function FreelanceProjectCard({
+  project,
+  onDelete,
+}: FreelanceProjectCardProps) {
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const handleDelete = () => {
-    onDelete(project.id)
-    setShowDeleteDialog(false)
-  }
+    onDelete(project.id);
+    setShowDeleteDialog(false);
+  };
 
   return (
     <Card className="overflow-hidden">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="space-y-1">
-            <CardTitle className="line-clamp-1">{project.projectName}</CardTitle>
+            <CardTitle className="line-clamp-1">
+              {project.projectName}
+            </CardTitle>
             <CardDescription className="flex items-center gap-1">
               <User className="h-3 w-3" />
               {project.clientName}
@@ -51,7 +75,9 @@ export function FreelanceProjectCard({ project, onDelete }: FreelanceProjectCard
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem asChild>
-                <Link href={`/admin/freelance-projects/${project.id}`}>View Details</Link>
+                <Link href={`/admin/freelance-projects/${project.id}`}>
+                  View Details
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link href={`/admin/freelance-projects/edit/${project.id}`}>
@@ -59,7 +85,10 @@ export function FreelanceProjectCard({ project, onDelete }: FreelanceProjectCard
                   Edit
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setShowDeleteDialog(true)} className="text-destructive">
+              <DropdownMenuItem
+                onClick={() => setShowDeleteDialog(true)}
+                className="text-destructive"
+              >
                 <Trash2 className="mr-2 h-4 w-4" />
                 Delete
               </DropdownMenuItem>
@@ -68,7 +97,9 @@ export function FreelanceProjectCard({ project, onDelete }: FreelanceProjectCard
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-sm text-muted-foreground line-clamp-2">{project.description}</p>
+        <p className="text-sm text-muted-foreground line-clamp-2">
+          {project.description}
+        </p>
 
         <div className="flex items-center gap-1 text-sm text-muted-foreground">
           <Clock className="h-3 w-3" />
@@ -91,7 +122,11 @@ export function FreelanceProjectCard({ project, onDelete }: FreelanceProjectCard
         <div className="flex space-x-2">
           {project.projectUrl && (
             <Button asChild size="sm" variant="outline" className="flex-1">
-              <a href={project.projectUrl} target="_blank" rel="noopener noreferrer">
+              <a
+                href={project.projectUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <ExternalLink className="mr-2 h-4 w-4" />
                 Live
               </a>
@@ -99,7 +134,11 @@ export function FreelanceProjectCard({ project, onDelete }: FreelanceProjectCard
           )}
           {project.githubUrl && (
             <Button asChild size="sm" variant="outline" className="flex-1">
-              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Github className="mr-2 h-4 w-4" />
                 Code
               </a>
@@ -113,8 +152,9 @@ export function FreelanceProjectCard({ project, onDelete }: FreelanceProjectCard
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the freelance project "{project.projectName}"
-              and remove all associated data.
+              This action cannot be undone. This will permanently delete the
+              freelance project &quot;{project.projectName}&quot; and remove all
+              associated data.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -129,5 +169,5 @@ export function FreelanceProjectCard({ project, onDelete }: FreelanceProjectCard
         </AlertDialogContent>
       </AlertDialog>
     </Card>
-  )
+  );
 }
