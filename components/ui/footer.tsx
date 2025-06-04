@@ -14,7 +14,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full bg-neutral-100 dark:bg-slate-950 py-12 border-t border-neutral-200 dark:border-neutral-800">
+    <footer className="w-full bg-neutral-200 dark:bg-neutral-950 py-12 border-t border-neutral-200 dark:border-neutral-800">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About / Logo Section */}
@@ -109,7 +109,7 @@ export function Footer() {
                   href="/#freelance"
                   className="text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors"
                 >
-                  Freelance Work
+                  Freelance Works
                 </Link>
               </li>
               <li>
@@ -143,7 +143,7 @@ export function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="mt-12 pt-6 border-t border-neutral-200 dark:border-neutral-800 text-center">
+        <div className="mt-6 pt-6 border-t border-neutral-400 dark:border-neutral-800 text-center">
           <p className="text-sm text-gray-600 dark:text-gray-400">
             © {currentYear} Saurav Kumar. All rights reserved.
           </p>
