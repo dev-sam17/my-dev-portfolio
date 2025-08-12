@@ -87,13 +87,13 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
   };
 
   return (
-    <div className="container h-full w-full bg-gradient-to-b from-white to-neutral-100 dark:from-gray-900 dark:to-black py-16">
-      <div className="space-y-8">
-        <div className="text-4xl font-bold dark:text-white text-black text-center">
+    <div className="w-full h-full bg-gradient-to-b from-white to-neutral-100 dark:from-gray-900 dark:to-black py-12">
+      <div className="max-w-7xl mx-auto space-y-6">
+        <div className="text-3xl font-bold dark:text-white text-black text-center">
           <h2>Featured Projects</h2>
         </div>
 
-        <div className="mx-auto p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+        <div className="px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, index) => (
             <div
               key={project.id}
@@ -101,11 +101,11 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
-              <Card className="overflow-hidden h-full border border-neutral-200 dark:border-neutral-800">
-                {/* Carousel with 16:9 aspect ratio for larger screens */}
+              <Card className="overflow-hidden h-full border border-neutral-200 dark:border-neutral-800 hover:shadow-lg transition-shadow duration-300">
+                {/* Carousel with 16:9 aspect ratio */}
                 <div className="relative w-full overflow-hidden">
                   {/* 16:9 aspect ratio container */}
-                  <div className="relative w-full pb-[56.25%] md:pb-[56.25%] lg:pb-[56.25%]">
+                  <div className="relative w-full pb-[56.25%]">
                     {/* Image slides */}
                     {project.images.map((image, imgIndex) => (
                       <Image
@@ -114,7 +114,7 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
                         alt={project.name}
                         fill
                         className={cn(
-                          "absolute inset-0 bg-cover bg-center transition-opacity duration-500",
+                          "absolute inset-0 object-cover transition-opacity duration-500",
                           currentSlides[index] === imgIndex
                             ? "opacity-100"
                             : "opacity-0"
@@ -122,36 +122,36 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
                       />
                     ))}
 
-                    {/* Carousel navigation - Fixed with proper event handling */}
-                    <div className="absolute inset-0 flex items-center justify-between p-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                    {/* Carousel navigation */}
+                    <div className="absolute inset-0 flex items-center justify-between p-1 opacity-0 group-hover:opacity-100 transition-opacity z-10">
                       <button
                         onClick={(e) => handlePrevSlide(e, index)}
-                        className="bg-black/30 hover:bg-black/50 text-white rounded-full p-1 md:p-2 backdrop-blur-sm transition-colors"
+                        className="bg-black/30 hover:bg-black/50 text-white rounded-full p-1 backdrop-blur-sm transition-colors"
                         aria-label="Previous slide"
                         type="button"
                       >
-                        <IconChevronLeft size={20} />
+                        <IconChevronLeft size={16} />
                       </button>
                       <button
                         onClick={(e) => handleNextSlide(e, index)}
-                        className="bg-black/30 hover:bg-black/50 text-white rounded-full p-1 md:p-2 backdrop-blur-sm transition-colors"
+                        className="bg-black/30 hover:bg-black/50 text-white rounded-full p-1 backdrop-blur-sm transition-colors"
                         aria-label="Next slide"
                         type="button"
                       >
-                        <IconChevronRight size={20} />
+                        <IconChevronRight size={16} />
                       </button>
                     </div>
 
-                    {/* Slide indicators - Fixed with proper event handling */}
-                    <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1 z-10">
+                    {/* Slide indicators */}
+                    <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1 z-10">
                       {project.images.map((_, imgIndex) => (
                         <button
                           key={imgIndex}
                           onClick={(e) => handleDotClick(e, index, imgIndex)}
                           className={cn(
-                            "w-1.5 h-1.5 rounded-full transition-all",
+                            "w-1 h-1 rounded-full transition-all",
                             currentSlides[index] === imgIndex
-                              ? "bg-white w-3"
+                              ? "bg-white w-2"
                               : "bg-white/50 hover:bg-white/80"
                           )}
                           aria-label={`Go to slide ${imgIndex + 1}`}
@@ -162,28 +162,33 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
                   </div>
                 </div>
 
-                <div className="p-6 space-y-4 bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 dark:from-slate-800 dark:to-slate-900 rounded-lg">
-                  <h3 className="text-xl font-bold dark:text-white">
+                <div className="p-5 space-y-3 bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-slate-800 dark:to-slate-900">
+                  <h3 className="text-lg font-bold text-white truncate">
                     {project.name}
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                  <p className="text-sm text-gray-100 dark:text-gray-300 line-clamp-3 h-14">
                     {project.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech) => (
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {project.technologies.slice(0, 4).map((tech) => (
                       <span
                         key={tech}
-                        className="px-2 py-1 text-xs rounded-full bg-neutral-200 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300"
+                        className="px-2 py-1 text-xs rounded-full bg-white/20 text-white"
                       >
                         {tech}
                       </span>
                     ))}
+                    {project.technologies.length > 4 && (
+                      <span className="px-2 py-1 text-xs rounded-full bg-white/20 text-white">
+                        +{project.technologies.length - 4}
+                      </span>
+                    )}
                   </div>
 
                   <div className="flex gap-3 pt-2">
                     {project.demoUrl && (
-                      <Button asChild variant="default" size="sm">
+                      <Button asChild variant="default" size="sm" className="h-8 text-sm px-3">
                         <Link
                           href={project.demoUrl}
                           target="_blank"
@@ -194,7 +199,7 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
                       </Button>
                     )}
                     {project.githubUrl && (
-                      <Button asChild variant="outline" size="sm">
+                      <Button asChild variant="outline" size="sm" className="h-8 text-sm px-3 bg-white/10 hover:bg-white/20 border-white/20">
                         <Link
                           href={project.githubUrl}
                           target="_blank"

@@ -53,8 +53,8 @@ export default function HeroSection() {
   ];
 
   return (
-    <BackgroundBeamsWithCollision>
-      <div className="flex flex-col items-center justify-center h-[40rem]">
+    <BackgroundBeamsWithCollision className="w-full">
+      <div className="flex flex-col items-center justify-center h-[40rem] w-full">
         <div className="mb-10 flex justify-center items-center rounded-full w-[158px] h-[158px] bg-gradient-to-b from-red-600 to-indigo-600">
           <Image
             src={portfolioDp}
@@ -76,10 +76,10 @@ export default function HeroSection() {
           <HoverBorderGradient
             containerClassName="w-40 rounded-full text-sm hover:scale-110 transition duration-300"
             as="button"
-            className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
+            className="flex items-center space-x-2"
           >
             <Link href={resumeLink} target="_blank">
-              <span className="bg-transparent">Resume</span>
+              Resume
             </Link>
           </HoverBorderGradient>
           <button

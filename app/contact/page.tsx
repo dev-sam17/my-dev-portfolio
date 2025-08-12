@@ -23,7 +23,7 @@ export default function ContactPage() {
     <>
       <FloatingNavDemo />
       <ToggleButton />
-      <div className="container mx-auto px-4 py-12 md:py-16 lg:py-24 bg-gradient-to-b from-white to-neutral-100 dark:from-gray-950 dark:to-gray-900">
+      <div className=" mx-auto px-4 py-12 md:py-16 lg:py-24 bg-gradient-to-b from-white to-neutral-100 dark:from-gray-950 dark:to-gray-900">
         <div className="mx-auto max-w-5xl">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4">
