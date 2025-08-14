@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -51,7 +50,7 @@ const navigation = [
 
 function UserDropdown() {
   const { data: session } = useSession();
-  
+
   if (!session?.user) {
     return null;
   }
@@ -71,7 +70,10 @@ function UserDropdown() {
         <Button variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar>
             {session.user.image ? (
-              <AvatarImage src={session.user.image} alt={session.user.name || "User"} />
+              <AvatarImage
+                src={session.user.image}
+                alt={session.user.name || "User"}
+              />
             ) : (
               <AvatarFallback className="bg-slate-600 text-white">
                 {userInitials}
@@ -84,7 +86,9 @@ function UserDropdown() {
         <DropdownMenuLabel>
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium">{session.user.name}</p>
-            <p className="text-xs text-muted-foreground truncate">{session.user.email}</p>
+            <p className="text-xs text-muted-foreground truncate">
+              {session.user.email}
+            </p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -95,8 +99,8 @@ function UserDropdown() {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem 
-          onClick={() => signOut({ callbackUrl: "/" })} 
+        <DropdownMenuItem
+          onClick={() => signOut({ callbackUrl: "/" })}
           className="cursor-pointer text-red-600 focus:text-red-600"
         >
           <LogOut className="mr-2 h-4 w-4" />
