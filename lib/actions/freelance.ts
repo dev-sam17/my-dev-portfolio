@@ -1,14 +1,19 @@
 "use server";
 import { prisma } from "../prisma";
 import { FreelanceProject, FreelanceProjectForm } from "../types";
+import { revalidatePath } from "next/cache";
 
 export async function createFreelanceProject(
   project: FreelanceProjectForm
 ): Promise<FreelanceProject | { error: string }> {
   try {
-    return await prisma.freelanceProject.create({
+    const createdProject = await prisma.freelanceProject.create({
       data: project,
     });
+    revalidatePath("/");
+    revalidatePath("/admin");
+    revalidatePath("/admin/freelance-projects");
+    return createdProject;
   } catch (error) {
     console.error("Error creating freelance project:", error);
     return { error: "Failed to create freelance project" };
@@ -48,10 +53,14 @@ export async function updateFreelanceProject(
   project: Partial<FreelanceProjectForm>
 ): Promise<FreelanceProject | { error: string }> {
   try {
-    return await prisma.freelanceProject.update({
+    const updatedProject = await prisma.freelanceProject.update({
       where: { id },
       data: project,
     });
+    revalidatePath("/");
+    revalidatePath("/admin");
+    revalidatePath("/admin/freelance-projects");
+    return updatedProject;
   } catch (error) {
     console.error(`Error updating freelance project ${id}:`, error);
     return { error: `Failed to update freelance project ${id}` };
@@ -62,9 +71,13 @@ export async function deleteFreelanceProject(
   id: string
 ): Promise<FreelanceProject | { error: string }> {
   try {
-    return await prisma.freelanceProject.delete({
+    const deletedProject = await prisma.freelanceProject.delete({
       where: { id },
     });
+    revalidatePath("/");
+    revalidatePath("/admin");
+    revalidatePath("/admin/freelance-projects");
+    return deletedProject;
   } catch (error) {
     console.error(`Error deleting freelance project ${id}:`, error);
     return { error: `Failed to delete freelance project ${id}` };

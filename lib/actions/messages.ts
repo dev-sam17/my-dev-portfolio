@@ -1,29 +1,32 @@
-'use server'
+"use server";
 
-import { z } from 'zod'
-import { prisma } from '../prisma'
+import { z } from "zod";
+import { prisma } from "../prisma";
+import { revalidatePath } from "next/cache";
 
 // Define the message schema for validation
 const messageSchema = z.object({
-  firstName: z.string().min(1, { message: 'First name is required' }),
-  lastName: z.string().min(1, { message: 'Last name is required' }),
-  email: z.string().email({ message: 'Invalid email address' }),
+  firstName: z.string().min(1, { message: "First name is required" }),
+  lastName: z.string().min(1, { message: "Last name is required" }),
+  email: z.string().email({ message: "Invalid email address" }),
   phone: z.string().optional(),
-  message: z.string().min(10, { message: 'Message must be at least 10 characters' }),
-})
+  message: z
+    .string()
+    .min(10, { message: "Message must be at least 10 characters" }),
+});
 
 // Type for form validation errors
 export type FormErrors = {
-  firstName?: string[]
-  lastName?: string[]
-  email?: string[]
-  phone?: string[]
-  message?: string[]
-  _form?: string[]
-}
+  firstName?: string[];
+  lastName?: string[];
+  email?: string[];
+  phone?: string[];
+  message?: string[];
+  _form?: string[];
+};
 
 // Type for the message form data
-export type MessageFormData = z.infer<typeof messageSchema>
+export type MessageFormData = z.infer<typeof messageSchema>;
 
 /**
  * Submit a new message from the contact form
@@ -33,31 +36,35 @@ export async function submitMessage(
 ): Promise<{ success: boolean; errors?: FormErrors }> {
   try {
     // Validate the form data
-    const validatedData = messageSchema.safeParse(formData)
-    
+    const validatedData = messageSchema.safeParse(formData);
+
     if (!validatedData.success) {
       // Return validation errors
-      const errors: FormErrors = {}
+      const errors: FormErrors = {};
       validatedData.error.errors.forEach((error) => {
-        const path = error.path[0] as keyof FormErrors
-        errors[path] = errors[path] || []
-        errors[path]!.push(error.message)
-      })
-      return { success: false, errors }
+        const path = error.path[0] as keyof FormErrors;
+        errors[path] = errors[path] || [];
+        errors[path]!.push(error.message);
+      });
+      return { success: false, errors };
     }
-    
+
     // Create the message in the database
     await prisma.message.create({
-      data: validatedData.data
-    })
-    
-    return { success: true }
+      data: validatedData.data,
+    });
+
+    revalidatePath("/");
+    revalidatePath("/admin");
+    revalidatePath("/admin/messages");
+
+    return { success: true };
   } catch (error) {
-    console.error('Error submitting message:', error)
-    return { 
-      success: false, 
-      errors: { _form: ['Failed to submit message. Please try again.'] } 
-    }
+    console.error("Error submitting message:", error);
+    return {
+      success: false,
+      errors: { _form: ["Failed to submit message. Please try again."] },
+    };
   }
 }
 
@@ -67,11 +74,11 @@ export async function submitMessage(
 export async function getMessages() {
   try {
     return await prisma.message.findMany({
-      orderBy: { createdAt: 'desc' }
-    })
+      orderBy: { createdAt: "desc" },
+    });
   } catch (error) {
-    console.error('Error fetching messages:', error)
-    return { error: 'Failed to fetch messages' }
+    console.error("Error fetching messages:", error);
+    return { error: "Failed to fetch messages" };
   }
 }
 
@@ -81,11 +88,11 @@ export async function getMessages() {
 export async function getMessageById(id: string) {
   try {
     return await prisma.message.findUnique({
-      where: { id }
-    })
+      where: { id },
+    });
   } catch (error) {
-    console.error(`Error fetching message ${id}:`, error)
-    return { error: `Failed to fetch message ${id}` }
+    console.error(`Error fetching message ${id}:`, error);
+    return { error: `Failed to fetch message ${id}` };
   }
 }
 
@@ -96,11 +103,11 @@ export async function markMessageAsRead(id: string) {
   try {
     return await prisma.message.update({
       where: { id },
-      data: { read: true }
-    })
+      data: { read: true },
+    });
   } catch (error) {
-    console.error(`Error marking message ${id} as read:`, error)
-    return { error: `Failed to mark message ${id} as read` }
+    console.error(`Error marking message ${id} as read:`, error);
+    return { error: `Failed to mark message ${id} as read` };
   }
 }
 
@@ -109,11 +116,15 @@ export async function markMessageAsRead(id: string) {
  */
 export async function deleteMessage(id: string) {
   try {
-    return await prisma.message.delete({
-      where: { id }
-    })
+    const deletedMessage = await prisma.message.delete({
+      where: { id },
+    });
+    revalidatePath("/");
+    revalidatePath("/admin");
+    revalidatePath("/admin/messages");
+    return deletedMessage;
   } catch (error) {
-    console.error(`Error deleting message ${id}:`, error)
-    return { error: `Failed to delete message ${id}` }
+    console.error(`Error deleting message ${id}:`, error);
+    return { error: `Failed to delete message ${id}` };
   }
 }
