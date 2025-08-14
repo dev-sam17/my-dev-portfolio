@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Plus, Search } from "lucide-react";
 import Link from "next/link";
 import { FreelanceProjectCard } from "./freelance-project-card";
 import type { FreelanceProject } from "@/lib/types";
+import { getFreelanceProjects } from "@/lib/actions/freelance";
 
 export default function FreelanceProjectsPage() {
   const [projects, setProjects] = useState<FreelanceProject[]>([]);
@@ -25,6 +26,22 @@ export default function FreelanceProjectsPage() {
   const handleDelete = (id: string) => {
     setProjects(projects.filter((project) => project.id !== id));
   };
+
+  // Fetch all freelance projects in a useEffect hook
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const projectsResponse = await getFreelanceProjects();
+      if ("error" in projectsResponse) {
+        console.error(
+          "Error fetching freelance projects:",
+          projectsResponse.error
+        );
+      } else {
+        setProjects(projectsResponse);
+      }
+    };
+    fetchProjects();
+  }, []);
 
   return (
     <div className="space-y-6 mx-5">

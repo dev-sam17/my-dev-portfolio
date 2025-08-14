@@ -13,6 +13,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, Plus, X } from "lucide-react"
 import type { FreelanceProject } from "@/lib/types"
+import { createFreelanceProject, updateFreelanceProject } from "@/lib/actions/freelance"
+import { toast } from "@/components/ui/use-toast"
 
 interface FreelanceProjectFormProps {
   project?: FreelanceProject
@@ -30,12 +32,49 @@ export function FreelanceProjectForm({ project }: FreelanceProjectFormProps) {
     githubUrl: project?.githubUrl || "",
   })
   const [newTechnology, setNewTechnology] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // In a real app, this would make an API call
-    console.log("Saving freelance project:", formData)
-    router.push("/admin/freelance-projects")
+    setIsSubmitting(true)
+    
+    try {
+      let result;
+      
+      if (project?.id) {
+        // Update existing project
+        result = await updateFreelanceProject(project.id, formData)
+      } else {
+        // Create new project
+        result = await createFreelanceProject(formData)
+      }
+      
+      if ("error" in result) {
+        toast({
+          title: "Error",
+          description: result.error,
+          variant: "destructive",
+        })
+      } else {
+        toast({
+          title: "Success",
+          description: project?.id 
+            ? "Freelance project updated successfully" 
+            : "Freelance project created successfully",
+        })
+        router.push("/admin/freelance-projects")
+        router.refresh()
+      }
+    } catch (error) {
+      console.error("Error saving freelance project:", error)
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const addTechnology = () => {
@@ -175,10 +214,21 @@ export function FreelanceProjectForm({ project }: FreelanceProjectFormProps) {
             </div>
 
             <div className="flex space-x-4">
-              <Button type="submit" className="bg-slate-600 hover:bg-slate-700">
-                {project ? "Update Freelance Project" : "Create Freelance Project"}
+              <Button 
+                type="submit" 
+                className="bg-slate-600 hover:bg-slate-700"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-r-transparent"></span>
+                    {project ? "Updating..." : "Creating..."}
+                  </>
+                ) : (
+                  project ? "Update Freelance Project" : "Create Freelance Project"
+                )}
               </Button>
-              <Button asChild variant="outline">
+              <Button asChild variant="outline" disabled={isSubmitting}>
                 <Link href="/admin/freelance-projects">Cancel</Link>
               </Button>
             </div>
