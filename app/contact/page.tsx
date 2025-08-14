@@ -12,12 +12,15 @@ import { ColourfulText } from "@/components/ui/colourful-text";
 import { FloatingNavDemo } from "../ui/nav/navBar";
 import { Footer } from "@/components/ui/footer";
 import { useState } from "react";
-import { FormErrors, MessageFormData, submitMessage } from "@/lib/actions/messages";
+import {
+  FormErrors,
+  MessageFormData,
+  submitMessage,
+} from "@/lib/actions/messages";
 import { useToast } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { Loader2 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-
 
 export default function ContactPage() {
   // Replace with your actual WhatsApp number
@@ -27,54 +30,56 @@ export default function ContactPage() {
     "Hello, I'd like to get in touch!"
   );
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-  
+
   // Form state
   const [formData, setFormData] = useState<MessageFormData>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    message: ''
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    message: "",
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formSuccess, setFormSuccess] = useState(false);
   const { toast } = useToast();
-  
+
   // Handle input changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    
+
     // Clear error when user types
     if (errors[name as keyof FormErrors]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: undefined
+        [name]: undefined,
       }));
     }
   };
-  
+
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setErrors({});
-    
+
     try {
       const result = await submitMessage(formData);
-      
+
       if (result.success) {
         setFormSuccess(true);
         setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          message: ''
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          message: "",
         });
         toast({
           title: "Message sent!",
@@ -84,8 +89,8 @@ export default function ContactPage() {
         setErrors(result.errors);
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
-      setErrors({ _form: ['An unexpected error occurred. Please try again.'] });
+      console.error("Error submitting form:", error);
+      setErrors({ _form: ["An unexpected error occurred. Please try again."] });
     } finally {
       setIsSubmitting(false);
     }
@@ -213,15 +218,16 @@ export default function ContactPage() {
                 <h2 className="text-xl font-semibold mb-4">
                   Send me a message
                 </h2>
-                
+
                 {formSuccess ? (
                   <Alert className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 mb-4">
                     <AlertDescription className="text-green-800 dark:text-green-300">
-                      Thank you for your message! I'll get back to you soon.
+                      Thank you for your message! I&apos;ll get back to you
+                      soon.
                     </AlertDescription>
                   </Alert>
                 ) : null}
-                
+
                 {errors._form ? (
                   <Alert className="bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 mb-4">
                     <AlertDescription className="text-red-800 dark:text-red-300">
@@ -229,7 +235,7 @@ export default function ContactPage() {
                     </AlertDescription>
                   </Alert>
                 ) : null}
-                
+
                 <form className="space-y-4" onSubmit={handleSubmit}>
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
@@ -244,7 +250,9 @@ export default function ContactPage() {
                         disabled={isSubmitting}
                       />
                       {errors.firstName ? (
-                        <p className="text-sm text-red-500">{errors.firstName[0]}</p>
+                        <p className="text-sm text-red-500">
+                          {errors.firstName[0]}
+                        </p>
                       ) : null}
                     </div>
                     <div className="space-y-2">
@@ -259,7 +267,9 @@ export default function ContactPage() {
                         disabled={isSubmitting}
                       />
                       {errors.lastName ? (
-                        <p className="text-sm text-red-500">{errors.lastName[0]}</p>
+                        <p className="text-sm text-red-500">
+                          {errors.lastName[0]}
+                        </p>
                       ) : null}
                     </div>
                   </div>
@@ -285,7 +295,7 @@ export default function ContactPage() {
                       id="phone"
                       name="phone"
                       type="tel"
-                      value={formData.phone || ''}
+                      value={formData.phone || ""}
                       onChange={handleChange}
                       placeholder="Enter your phone number"
                       className="border-gray-500"
@@ -307,12 +317,14 @@ export default function ContactPage() {
                       disabled={isSubmitting}
                     />
                     {errors.message ? (
-                      <p className="text-sm text-red-500">{errors.message[0]}</p>
+                      <p className="text-sm text-red-500">
+                        {errors.message[0]}
+                      </p>
                     ) : null}
                   </div>
-                  <Button 
-                    type="submit" 
-                    className="w-full" 
+                  <Button
+                    type="submit"
+                    className="w-full"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
@@ -321,7 +333,7 @@ export default function ContactPage() {
                         Sending...
                       </>
                     ) : (
-                      'Send message'
+                      "Send message"
                     )}
                   </Button>
                 </form>

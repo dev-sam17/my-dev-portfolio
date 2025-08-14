@@ -6,13 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  FolderOpen,
-  Briefcase,
-  Plus,
-  BarChart3,
-  MessageSquare,
-} from "lucide-react";
+import { FolderOpen, Briefcase, Plus, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import { getProjects } from "@/lib/actions/projects";
 import { getFreelanceProjects } from "@/lib/actions/freelance";
