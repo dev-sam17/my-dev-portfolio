@@ -6,10 +6,13 @@ import { Footer } from "@/components/ui/footer";
 import { ProjectsSection } from "./ui/projects/projects";
 import { FreelanceSection } from "./ui/freelance/freelance";
 import { getProjects } from "@/lib/actions/projects";
-import { Project } from "@/lib/types";
+import { FreelanceProject, Project } from "@/lib/types";
+import { getFreelanceProjects } from "@/lib/actions/freelance";
 
 export default async function Home() {
   const projects = await getProjects();
+  const freelanceProjects = await getFreelanceProjects();
+
   return (
     <>
       <ToggleButton />
@@ -24,13 +27,11 @@ export default async function Home() {
         <ProjectsSection projects={projects as Project[]} />
       </section>
       <section id="freelance">
-        <FreelanceSection />
+        <FreelanceSection
+          freelanceProjects={freelanceProjects as FreelanceProject[]}
+        />
       </section>
       <Footer />
     </>
   );
 }
-
-
-
-

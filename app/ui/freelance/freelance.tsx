@@ -5,63 +5,57 @@ import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { FreelanceProject } from "@/lib/types";
 
-interface FreelanceProject {
-  id: number;
-  clientName: string;
-  projectName: string;
-  description: string;
-  technologies: string[];
-  timeline: string;
-  projectUrl?: string;
-  githubUrl?: string;
-}
+// const freelanceProjects: FreelanceProject[] = [
+//   {
+//     id: 1,
+//     clientName: "TechStart Inc.",
+//     projectName: "Customer Portal Redesign",
+//     description:
+//       "Redesigned and implemented a customer portal with improved UX, resulting in 40% increase in user engagement and 25% reduction in support tickets.",
+//     technologies: ["React", "Next.js", "Tailwind CSS", "Node.js", "MongoDB"],
+//     timeline: "Jan 2023 - Mar 2023",
+//     projectUrl: "https://techstart.com/portal",
+//   },
+//   {
+//     id: 2,
+//     clientName: "HealthTrack",
+//     projectName: "Patient Management System",
+//     description:
+//       "Developed a secure patient management system with appointment scheduling, medical records, and billing integration.",
+//     technologies: ["Vue.js", "Express", "PostgreSQL", "Docker", "AWS"],
+//     timeline: "Apr 2023 - Aug 2023",
+//     projectUrl: "https://healthtrack-demo.com",
+//     githubUrl: "https://github.com/username/health-track-demo",
+//   },
+//   {
+//     id: 3,
+//     clientName: "EduLearn Platform",
+//     projectName: "Interactive Learning Dashboard",
+//     description:
+//       "Built an interactive learning dashboard with real-time progress tracking, quiz functionality, and content recommendation engine.",
+//     technologies: ["React", "Firebase", "Redux", "Material UI", "Chart.js"],
+//     timeline: "Sep 2023 - Dec 2023",
+//     projectUrl: "https://edulearn.io/dashboard",
+//   },
+//   {
+//     id: 4,
+//     clientName: "FinTech Solutions",
+//     projectName: "Investment Portfolio Tracker",
+//     description:
+//       "Created a responsive investment portfolio tracker with real-time market data integration, performance analytics, and custom alerts.",
+//     technologies: ["Angular", "TypeScript", "Node.js", "MongoDB", "D3.js"],
+//     timeline: "Jan 2024 - Apr 2024",
+//     projectUrl: "https://fintech-portfolio.demo.com",
+//   },
+// ];
 
-const freelanceProjects: FreelanceProject[] = [
-  {
-    id: 1,
-    clientName: "TechStart Inc.",
-    projectName: "Customer Portal Redesign",
-    description:
-      "Redesigned and implemented a customer portal with improved UX, resulting in 40% increase in user engagement and 25% reduction in support tickets.",
-    technologies: ["React", "Next.js", "Tailwind CSS", "Node.js", "MongoDB"],
-    timeline: "Jan 2023 - Mar 2023",
-    projectUrl: "https://techstart.com/portal",
-  },
-  {
-    id: 2,
-    clientName: "HealthTrack",
-    projectName: "Patient Management System",
-    description:
-      "Developed a secure patient management system with appointment scheduling, medical records, and billing integration.",
-    technologies: ["Vue.js", "Express", "PostgreSQL", "Docker", "AWS"],
-    timeline: "Apr 2023 - Aug 2023",
-    projectUrl: "https://healthtrack-demo.com",
-    githubUrl: "https://github.com/username/health-track-demo",
-  },
-  {
-    id: 3,
-    clientName: "EduLearn Platform",
-    projectName: "Interactive Learning Dashboard",
-    description:
-      "Built an interactive learning dashboard with real-time progress tracking, quiz functionality, and content recommendation engine.",
-    technologies: ["React", "Firebase", "Redux", "Material UI", "Chart.js"],
-    timeline: "Sep 2023 - Dec 2023",
-    projectUrl: "https://edulearn.io/dashboard",
-  },
-  {
-    id: 4,
-    clientName: "FinTech Solutions",
-    projectName: "Investment Portfolio Tracker",
-    description:
-      "Created a responsive investment portfolio tracker with real-time market data integration, performance analytics, and custom alerts.",
-    technologies: ["Angular", "TypeScript", "Node.js", "MongoDB", "D3.js"],
-    timeline: "Jan 2024 - Apr 2024",
-    projectUrl: "https://fintech-portfolio.demo.com",
-  },
-];
-
-export function FreelanceSection() {
+export function FreelanceSection({
+  freelanceProjects,
+}: {
+  freelanceProjects: FreelanceProject[];
+}) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
