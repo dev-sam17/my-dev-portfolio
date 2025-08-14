@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Github, Instagram, Linkedin, Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,6 +11,13 @@ import { ToggleButton } from "../ui/nav/toggleButton";
 import { ColourfulText } from "@/components/ui/colourful-text";
 import { FloatingNavDemo } from "../ui/nav/navBar";
 import { Footer } from "@/components/ui/footer";
+import { useState } from "react";
+import { FormErrors, MessageFormData, submitMessage } from "@/lib/actions/messages";
+import { useToast } from "@/components/ui/use-toast";
+import { Toaster } from "@/components/ui/toaster";
+import { Loader2 } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+
 
 export default function ContactPage() {
   // Replace with your actual WhatsApp number
@@ -18,6 +27,69 @@ export default function ContactPage() {
     "Hello, I'd like to get in touch!"
   );
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+  
+  // Form state
+  const [formData, setFormData] = useState<MessageFormData>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formSuccess, setFormSuccess] = useState(false);
+  const { toast } = useToast();
+  
+  // Handle input changes
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    
+    // Clear error when user types
+    if (errors[name as keyof FormErrors]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: undefined
+      }));
+    }
+  };
+  
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setErrors({});
+    
+    try {
+      const result = await submitMessage(formData);
+      
+      if (result.success) {
+        setFormSuccess(true);
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          message: ''
+        });
+        toast({
+          title: "Message sent!",
+          description: "Thank you for your message. I'll get back to you soon.",
+        });
+      } else if (result.errors) {
+        setErrors(result.errors);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setErrors({ _form: ['An unexpected error occurred. Please try again.'] });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <>
@@ -141,53 +213,116 @@ export default function ContactPage() {
                 <h2 className="text-xl font-semibold mb-4">
                   Send me a message
                 </h2>
-                <form className="space-y-4">
+                
+                {formSuccess ? (
+                  <Alert className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 mb-4">
+                    <AlertDescription className="text-green-800 dark:text-green-300">
+                      Thank you for your message! I'll get back to you soon.
+                    </AlertDescription>
+                  </Alert>
+                ) : null}
+                
+                {errors._form ? (
+                  <Alert className="bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 mb-4">
+                    <AlertDescription className="text-red-800 dark:text-red-300">
+                      {errors._form[0]}
+                    </AlertDescription>
+                  </Alert>
+                ) : null}
+                
+                <form className="space-y-4" onSubmit={handleSubmit}>
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
-                      <Label htmlFor="first-name">First name</Label>
+                      <Label htmlFor="firstName">First name</Label>
                       <Input
-                        id="first-name"
+                        id="firstName"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleChange}
                         placeholder="Enter your first name"
                         className="border-gray-500"
+                        disabled={isSubmitting}
                       />
+                      {errors.firstName ? (
+                        <p className="text-sm text-red-500">{errors.firstName[0]}</p>
+                      ) : null}
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="last-name">Last name</Label>
+                      <Label htmlFor="lastName">Last name</Label>
                       <Input
-                        id="last-name"
+                        id="lastName"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
                         placeholder="Enter your last name"
                         className="border-gray-500"
+                        disabled={isSubmitting}
                       />
+                      {errors.lastName ? (
+                        <p className="text-sm text-red-500">{errors.lastName[0]}</p>
+                      ) : null}
                     </div>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
                     <Input
                       id="email"
+                      name="email"
                       type="email"
+                      value={formData.email}
+                      onChange={handleChange}
                       placeholder="Enter your email"
                       className="border-gray-500"
+                      disabled={isSubmitting}
                     />
+                    {errors.email ? (
+                      <p className="text-sm text-red-500">{errors.email[0]}</p>
+                    ) : null}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="phone">Phone (optional)</Label>
                     <Input
                       id="phone"
+                      name="phone"
                       type="tel"
+                      value={formData.phone || ''}
+                      onChange={handleChange}
                       placeholder="Enter your phone number"
                       className="border-gray-500"
+                      disabled={isSubmitting}
                     />
+                    {errors.phone ? (
+                      <p className="text-sm text-red-500">{errors.phone[0]}</p>
+                    ) : null}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="message">Message</Label>
                     <Textarea
                       id="message"
-                      placeholder="How can we help you?"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      placeholder="How can I help you?"
                       className="min-h-[120px] border-gray-500"
+                      disabled={isSubmitting}
                     />
+                    {errors.message ? (
+                      <p className="text-sm text-red-500">{errors.message[0]}</p>
+                    ) : null}
                   </div>
-                  <Button type="submit" className="w-full">
-                    Send message
+                  <Button 
+                    type="submit" 
+                    className="w-full" 
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      'Send message'
+                    )}
                   </Button>
                 </form>
               </div>
@@ -196,6 +331,7 @@ export default function ContactPage() {
         </div>
       </div>
       <Footer />
+      <Toaster />
     </>
   );
 }

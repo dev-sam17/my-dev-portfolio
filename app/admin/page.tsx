@@ -1,19 +1,45 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { FolderOpen, Briefcase, Plus, BarChart3 } from "lucide-react"
-import Link from "next/link"
-import { getProjects } from "@/lib/actions/projects"
-import { getFreelanceProjects } from "@/lib/actions/freelance"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  FolderOpen,
+  Briefcase,
+  Plus,
+  BarChart3,
+  MessageSquare,
+} from "lucide-react";
+import Link from "next/link";
+import { getProjects } from "@/lib/actions/projects";
+import { getFreelanceProjects } from "@/lib/actions/freelance";
+import { getMessages } from "@/lib/actions/messages";
 
 export default async function adminPage() {
-
   const projects = await getProjects();
   const freelanceProjects = await getFreelanceProjects();
+  const messages = await getMessages();
 
-  if("error" in projects || "error" in freelanceProjects){
-    console.error((projects as { error: string }).error || (freelanceProjects as { error: string }).error)
-    return
+  if (
+    "error" in projects ||
+    "error" in freelanceProjects ||
+    "error" in messages
+  ) {
+    console.error(
+      (projects as { error: string }).error ||
+        (freelanceProjects as { error: string }).error ||
+        (messages as { error: string }).error
+    );
+    return;
   }
+
+  // Count unread messages
+  const unreadMessages = Array.isArray(messages)
+    ? messages.filter((msg) => !msg.read).length
+    : 0;
 
   return (
     <div className="space-y-6 mx-5">
@@ -21,7 +47,8 @@ export default async function adminPage() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
           <p className="text-muted-foreground">
-            Welcome to your admin portal. Manage your projects and freelance work.
+            Welcome to your admin portal. Manage your projects and freelance
+            work.
           </p>
         </div>
       </div>
@@ -29,48 +56,67 @@ export default async function adminPage() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Projects</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Total Projects
+            </CardTitle>
             <FolderOpen className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{projects.length}</div>
-            <p className="text-xs text-muted-foreground">Active development projects</p>
+            <p className="text-xs text-muted-foreground">
+              Active development projects
+            </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Freelance Projects</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Total Freelance
+            </CardTitle>
             <Briefcase className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{freelanceProjects.length}</div>
-            <p className="text-xs text-muted-foreground">Client projects completed</p>
+            <p className="text-xs text-muted-foreground">
+              Active freelance projects
+            </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Technologies</CardTitle>
-            <BarChart3 className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Messages</CardTitle>
+            <MessageSquare className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {
-                new Set([
-                  ...projects.flatMap((p) => p.technologies),
-                  ...freelanceProjects.flatMap((p) => p.technologies),
-                ]).size
-              }
+              {Array.isArray(messages) ? messages.length : 0}
             </div>
-            <p className="text-xs text-muted-foreground">Unique technologies used</p>
+            <div className="flex items-center justify-between">
+              <p className="text-xs text-muted-foreground">
+                {unreadMessages > 0
+                  ? `${unreadMessages} unread`
+                  : "No unread messages"}
+              </p>
+              <Button asChild size="sm" variant="ghost" className="h-8 w-8 p-0">
+                <Link href="/admin/messages">
+                  <MessageSquare className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
           </CardContent>
         </Card>
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Quick Actions</CardTitle>
             <Plus className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent className="space-y-2">
-            <Button asChild size="sm" className="w-full bg-slate-600 hover:bg-slate-700">
+            <Button
+              asChild
+              size="sm"
+              className="w-full bg-slate-600 hover:bg-slate-700"
+            >
               <Link href="/admin/projects/new">
                 <Plus className="mr-2 h-4 w-4" />
                 New Project
@@ -80,6 +126,12 @@ export default async function adminPage() {
               <Link href="/admin/freelance-projects/new">
                 <Plus className="mr-2 h-4 w-4" />
                 New Freelance
+              </Link>
+            </Button>
+            <Button asChild size="sm" variant="outline" className="w-full">
+              <Link href="/admin/messages">
+                <MessageSquare className="mr-2 h-4 w-4" />
+                Messages
               </Link>
             </Button>
           </CardContent>
@@ -99,8 +151,12 @@ export default async function adminPage() {
                   <FolderOpen className="h-5 w-5 text-slate-600 dark:text-slate-400" />
                 </div>
                 <div className="flex-1 space-y-1">
-                  <p className="text-sm font-medium leading-none">{project.name}</p>
-                  <p className="text-sm text-muted-foreground">{project.technologies.slice(0, 2).join(", ")}</p>
+                  <p className="text-sm font-medium leading-none">
+                    {project.name}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {project.technologies.slice(0, 2).join(", ")}
+                  </p>
                 </div>
                 <Button asChild size="sm" variant="outline">
                   <Link href={`/admin/projects/${project.id}`}>View</Link>
@@ -125,11 +181,17 @@ export default async function adminPage() {
                   <Briefcase className="h-5 w-5 text-slate-600 dark:text-slate-400" />
                 </div>
                 <div className="flex-1 space-y-1">
-                  <p className="text-sm font-medium leading-none">{project.projectName}</p>
-                  <p className="text-sm text-muted-foreground">{project.clientName}</p>
+                  <p className="text-sm font-medium leading-none">
+                    {project.projectName}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {project.clientName}
+                  </p>
                 </div>
                 <Button asChild size="sm" variant="outline">
-                  <Link href={`/admin/freelance-projects/${project.id}`}>View</Link>
+                  <Link href={`/admin/freelance-projects/${project.id}`}>
+                    View
+                  </Link>
                 </Button>
               </div>
             ))}
@@ -140,5 +202,5 @@ export default async function adminPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

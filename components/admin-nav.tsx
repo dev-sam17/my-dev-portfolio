@@ -1,11 +1,16 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { ModeToggle } from "@/components/mode-toggle"
-import { LayoutDashboard, FolderOpen, Briefcase } from "lucide-react"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ModeToggle } from "@/components/mode-toggle";
+import {
+  LayoutDashboard,
+  FolderOpen,
+  Briefcase,
+  MessageSquare,
+} from "lucide-react";
 
 const navigation = [
   {
@@ -23,10 +28,15 @@ const navigation = [
     href: "/admin/freelance-projects",
     icon: Briefcase,
   },
-]
+  {
+    name: "Messages",
+    href: "/admin/messages",
+    icon: MessageSquare,
+  },
+];
 
 export function AdminNav() {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
     <div className="flex h-16 items-center justify-between border-b bg-background px-6">
@@ -39,24 +49,28 @@ export function AdminNav() {
         </Link>
         <nav className="flex items-center space-x-1">
           {navigation.map((item) => {
-            const Icon = item.icon
+            const Icon = item.icon;
             return (
               <Button
                 key={item.name}
                 variant={pathname === item.href ? "default" : "ghost"}
                 asChild
-                className={cn("justify-start", pathname === item.href && "bg-slate-600 text-white hover:bg-slate-700")}
+                className={cn(
+                  "justify-start",
+                  pathname === item.href &&
+                    "bg-slate-600 text-white hover:bg-slate-700"
+                )}
               >
                 <Link href={item.href}>
                   <Icon className="mr-2 h-4 w-4" />
                   {item.name}
                 </Link>
               </Button>
-            )
+            );
           })}
         </nav>
       </div>
       <ModeToggle />
     </div>
-  )
+  );
 }
