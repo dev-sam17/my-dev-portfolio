@@ -10,7 +10,6 @@ import {
   FolderOpen,
   Briefcase,
   MessageSquare,
-  User,
   LogOut,
   Settings,
 } from "lucide-react";
