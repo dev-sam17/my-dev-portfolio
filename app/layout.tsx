@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import NextAuthSessionProvider from "@/app/providers/session-provider";
 
 export const metadata: Metadata = {
   title: "Saurav Kumar",
@@ -23,7 +24,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
           </ThemeProvider>
         </body>
       </html>
