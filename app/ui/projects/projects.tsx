@@ -7,13 +7,17 @@ import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { IconChevronLeft, IconChevronRight, IconExternalLink, IconBrandGithub, IconX } from "@tabler/icons-react";
+import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconExternalLink,
+  IconBrandGithub,
+} from "@tabler/icons-react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import type { Project } from "@/lib/types";
 
@@ -165,7 +169,7 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
-              <Card 
+              <Card
                 className="overflow-hidden h-full border border-neutral-200 dark:border-neutral-800 hover:shadow-lg transition-shadow duration-300 cursor-pointer bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-slate-800 dark:to-slate-900"
                 onClick={() => handleCardClick(project)}
               >
@@ -255,7 +259,12 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
 
                   <div className="flex gap-3 pt-2">
                     {project.demoUrl && (
-                      <Button asChild variant="default" size="sm" className="h-8 text-sm px-3">
+                      <Button
+                        asChild
+                        variant="default"
+                        size="sm"
+                        className="h-8 text-sm px-3"
+                      >
                         <Link
                           href={project.demoUrl}
                           target="_blank"
@@ -266,7 +275,12 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
                       </Button>
                     )}
                     {project.githubUrl && (
-                      <Button asChild variant="outline" size="sm" className="h-8 text-sm px-3 bg-white/10 hover:bg-white/20 border-white/20">
+                      <Button
+                        asChild
+                        variant="outline"
+                        size="sm"
+                        className="h-8 text-sm px-3 bg-white/10 hover:bg-white/20 border-white/20"
+                      >
                         <Link
                           href={project.githubUrl}
                           target="_blank"
@@ -303,13 +317,15 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
                   {selectedProject.name}
                 </DialogTitle>
               </DialogHeader>
-              
+
               <div className="space-y-6">
                 {/* Image Carousel */}
                 <div className="relative w-full overflow-hidden rounded-lg">
                   <div className="relative w-full pb-[56.25%]">
                     {selectedProject.images.map((image, imgIndex) => {
-                      const projectIndex = projects.findIndex(p => p.id === selectedProject.id);
+                      const projectIndex = projects.findIndex(
+                        (p) => p.id === selectedProject.id
+                      );
                       return (
                         <Image
                           key={imgIndex}
@@ -330,7 +346,14 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
                     {selectedProject.images.length > 1 && (
                       <div className="absolute inset-0 flex items-center justify-between p-4">
                         <button
-                          onClick={(e) => handleDialogPrevSlide(e, projects.findIndex(p => p.id === selectedProject.id))}
+                          onClick={(e) =>
+                            handleDialogPrevSlide(
+                              e,
+                              projects.findIndex(
+                                (p) => p.id === selectedProject.id
+                              )
+                            )
+                          }
                           className="bg-black/50 hover:bg-black/70 text-white rounded-full p-2 backdrop-blur-sm transition-colors"
                           aria-label="Previous slide"
                           type="button"
@@ -338,7 +361,14 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
                           <IconChevronLeft size={20} />
                         </button>
                         <button
-                          onClick={(e) => handleDialogNextSlide(e, projects.findIndex(p => p.id === selectedProject.id))}
+                          onClick={(e) =>
+                            handleDialogNextSlide(
+                              e,
+                              projects.findIndex(
+                                (p) => p.id === selectedProject.id
+                              )
+                            )
+                          }
                           className="bg-black/50 hover:bg-black/70 text-white rounded-full p-2 backdrop-blur-sm transition-colors"
                           aria-label="Next slide"
                           type="button"
@@ -352,11 +382,15 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
                     {selectedProject.images.length > 1 && (
                       <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
                         {selectedProject.images.map((_, imgIndex) => {
-                          const projectIndex = projects.findIndex(p => p.id === selectedProject.id);
+                          const projectIndex = projects.findIndex(
+                            (p) => p.id === selectedProject.id
+                          );
                           return (
                             <button
                               key={imgIndex}
-                              onClick={(e) => handleDialogDotClick(e, projectIndex, imgIndex)}
+                              onClick={(e) =>
+                                handleDialogDotClick(e, projectIndex, imgIndex)
+                              }
                               className={cn(
                                 "w-2 h-2 rounded-full transition-all",
                                 dialogSlides[projectIndex] === imgIndex
@@ -411,7 +445,11 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
                       </Button>
                     )}
                     {selectedProject.githubUrl && (
-                      <Button asChild variant="outline" className="flex items-center gap-2">
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="flex items-center gap-2"
+                      >
                         <Link
                           href={selectedProject.githubUrl}
                           target="_blank"
