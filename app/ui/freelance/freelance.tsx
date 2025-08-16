@@ -135,29 +135,33 @@ export function FreelanceSection({
                               ))}
                             </div>
 
-                            <div className="flex gap-3 pt-2">
-                              {project.projectUrl && (
-                                <Button asChild variant="default" size="sm">
-                                  <Link
-                                    href={project.projectUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                  >
-                                    View Project
-                                  </Link>
-                                </Button>
-                              )}
-                              {project.githubUrl && (
-                                <Button asChild variant="outline" size="sm">
-                                  <Link
-                                    href={project.githubUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                  >
-                                    GitHub
-                                  </Link>
-                                </Button>
-                              )}
+                            <div className="flex gap-3 pt-2 relative z-10">
+                              {project.projectUrl &&
+                                project.projectUrl.trim() !== "" && (
+                                  <Button asChild variant="default" size="sm">
+                                    <Link
+                                      href={project.projectUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center relative z-10"
+                                    >
+                                      View Project
+                                    </Link>
+                                  </Button>
+                                )}
+                              {project.githubUrl &&
+                                project.githubUrl.trim() !== "" && (
+                                  <Button asChild variant="outline" size="sm">
+                                    <Link
+                                      href={project.githubUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="relative z-10"
+                                    >
+                                      GitHub
+                                    </Link>
+                                  </Button>
+                                )}
                             </div>
                           </div>
 
@@ -217,29 +221,33 @@ export function FreelanceSection({
                               ))}
                             </div>
 
-                            <div className="flex gap-3 pt-2">
-                              {project.projectUrl && (
-                                <Button asChild variant="default" size="sm">
-                                  <Link
-                                    href={project.projectUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                  >
-                                    View Project
-                                  </Link>
-                                </Button>
-                              )}
-                              {project.githubUrl && (
-                                <Button asChild variant="outline" size="sm">
-                                  <Link
-                                    href={project.githubUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                  >
-                                    GitHub
-                                  </Link>
-                                </Button>
-                              )}
+                            <div className="flex gap-3 pt-2 relative z-10">
+                              {project.projectUrl &&
+                                project.projectUrl.trim() !== "" && (
+                                  <Button asChild variant="default" size="sm">
+                                    <Link
+                                      href={project.projectUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center relative z-10"
+                                    >
+                                      View Project
+                                    </Link>
+                                  </Button>
+                                )}
+                              {project.githubUrl &&
+                                project.githubUrl.trim() !== "" && (
+                                  <Button asChild variant="outline" size="sm">
+                                    <Link
+                                      href={project.githubUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="relative z-10"
+                                    >
+                                      GitHub
+                                    </Link>
+                                  </Button>
+                                )}
                             </div>
                           </div>
 
