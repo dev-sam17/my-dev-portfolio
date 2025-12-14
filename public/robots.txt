@@ -1,0 +1,6 @@
+# Block all crawlers from /admin
+User-agent: *
+Disallow: /admin
+
+# Sitemap location
+Sitemap: https://devsam.in/sitemap.xml
