@@ -20,7 +20,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Plus, X } from "lucide-react";
 import type { Project } from "@/lib/types";
-import { createProject } from "@/lib/actions/projects";
+import { createProject, updateProject } from "@/lib/actions/projects";
 import { toast } from "@/components/ui/use-toast";
 import { upload } from "@vercel/blob/client";
 import Image from "next/image";
@@ -98,7 +98,9 @@ export function ProjectForm({ project }: ProjectFormProps) {
   };
 
   const onSubmit = async (data: ProjectFormValues) => {
-    const result = await createProject(data);
+    const result = project
+      ? await updateProject(project.id, data)
+      : await createProject(data);
     if ("error" in result) {
       toast({
         title: "Error",
@@ -108,7 +110,9 @@ export function ProjectForm({ project }: ProjectFormProps) {
     } else {
       toast({
         title: "Success",
-        description: "Project created successfully",
+        description: project
+          ? "Project updated successfully"
+          : "Project created successfully",
       });
       router.push("/admin/projects");
     }
